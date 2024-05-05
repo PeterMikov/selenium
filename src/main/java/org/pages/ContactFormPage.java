@@ -1,15 +1,16 @@
 package org.pages;
 
+import org.config.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class ContactForm {
-    private WebDriver driver;
+public class ContactFormPage extends BasePage {
 
     // Constructor
-    public ContactForm(WebDriver driver) {
+    public ContactFormPage(WebDriver driver) {
         this.driver = driver;
+        baseUrl = "https://www.automationtesting.co.uk/contactForm.html";
     }
 
     // Page elements defined using By

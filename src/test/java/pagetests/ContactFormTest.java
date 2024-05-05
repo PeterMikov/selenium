@@ -1,22 +1,24 @@
-package section05;
+package pagetests;
 
 import org.config.BaseTest;
 import org.openqa.selenium.WebElement;
-import org.pages.ContactForm;
+import org.pages.ContactFormPage;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class ContactFormTest extends BaseTest {
 
+    ContactFormPage contactForm;
+
     @BeforeTest
     private void beforeTest() {
         setUp();
-        driver.get("https://www.automationtesting.co.uk/contactForm.html");
+        contactForm = new ContactFormPage(driver);
+        driver.get(contactForm.baseUrl);
     }
 
-    @Test(description = "click the button")
+    @Test(description = "submit data")
     void fillInTheContactFormTestAndSubmit() throws InterruptedException {
-        var contactForm = new ContactForm(driver);
         contactForm.enterFirstName("Petar");
         contactForm.enterLastName("Mikov");
         contactForm.enterEmail("pmikov@yahoo.com");
@@ -28,16 +30,15 @@ public class ContactFormTest extends BaseTest {
         Assert.assertEquals(message, "Thank you for your mail!", "Messages do not match!");
     }
 
-    @Test(description = "click the button")
+    @Test(description = "reset data")
     void fillInTheContactFormTestAndReset() throws InterruptedException {
-        var contactForm = new ContactForm(driver);
         contactForm.enterFirstName("Petar");
         contactForm.enterLastName("Mikov");
         contactForm.enterEmail("pmikov@yahoo.com");
         contactForm.enterMessage("Hello Dudes!");
         contactForm.clickResetButton();
         Thread.sleep(2000);
-        Assert.assertTrue(driver.findElement(contactForm.firstNameField).getAttribute("placeholder").equals("First Name"));
+        Assert.assertEquals(driver.findElement(contactForm.firstNameField).getAttribute("placeholder"), "First Name");
     }
 
     @AfterTest
